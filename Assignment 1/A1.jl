@@ -60,6 +60,11 @@ let
 	end
 end
 
+# ╔═╡ a29b97a4-ad2e-4888-97bc-6d129c7a19ba
+with_terminal() do
+	println("Hello worlds")
+end
+
 # ╔═╡ 859041a0-98b0-427d-8d92-f53f29176805
 md"""
 ## Gaussian Distribution
@@ -103,28 +108,35 @@ Below you will be implementing the sample mean, variance, and standard deviation
 
 """
 
+# ╔═╡ e8437a34-c89b-4da6-ad49-56ea445bacd9
+
+
 # ╔═╡ b950704c-4276-4e06-bad0-944aab0b767b
 
 
 # ╔═╡ 6fcf8a25-07a9-4d5a-8aa4-af4c4d38c96c
 function mean(X::Vector{Float64})
-	m = 0
-	for s in X
-		m += s
-	return m / size(X)
+	s = 0
+	for x in X
+		s += x	
+	end
+	return s / length(X)
 end
 
 # ╔═╡ 10a62eea-efc1-416c-a789-21245a2c3470
 function var(X::Vector{Float64})
 	m = mean(X)
 	v = 0
+	n = length(X) - 1
 	for x in X
-		v += ((x - m)^2)/ (size(X) - 1)
-	return v
+	    v += (x - m)^2 / n
+	end
+    return v
 end
 
 # ╔═╡ eb442864-b44d-4980-bb8f-912bc802d4d2
 function stddev(X::Vector{Float64})
+	sqrt(var(X))	
 end
 
 # ╔═╡ 5a89a61f-fb50-4843-97da-a1c526aa6a64
@@ -151,19 +163,63 @@ md"""
 Use the below let blocks to complete question 4(bcde). You will be graded on your written work, not on the code in these cells.
 """
 
-# ╔═╡ e95ab024-5343-47b8-a1b5-a4f6e2be3549
+# ╔═╡ dfe61219-4c26-4cf1-a9ba-3a6abddfdaa8
+md"
+Run the code for 10 samples with µ = 0 and σ 2 = 1.0. Write down the sample average that you obtain. Now do this another 4 times, giving you 5 estimates of the sample average M1, M2, M3, M4 and M5. What is the sample variance of these 5 estimates? Use the unbiased sample variance formula. Note that here we want to understand the
+variability of the mean estimator itself, if it had been run on different datasets; beautifully we can actually simulate this using synthetic data.
+"
+
+# ╔═╡ 9406e2bf-c6c6-4cc2-a79e-376fdb554df5
 let # 4b
-	
+	# using the means from the 10 samples
+	X = [0.09177, 0.1362, 0.553, 0.3527, -0.1012]
+	μ̂ = mean(X)
+	σ̂ = stddev(X)
+	v = var(X)
+	with_terminal() do
+		println("Variance " , v)
+	end
 end
+
+# ╔═╡ 1513064c-438e-44e3-9e95-6500219eac00
+md"Now run the same experiment, but use 100 samples for each sample average
+estimate. What is the sample variance of these 5 estimates? How is it different from the variance when you used 10 samples to compute the estimates?"
 
 # ╔═╡ 42b5216b-1127-4733-953f-652e4afbc105
 let # 4c
-	
+	# using the means from the 100 samples
+	X = [-0.05904, 0.1058, 0.0677, -0.1398, 0.08169]
+	μ̂ = mean(X)
+	σ̂ = stddev(X)
+	v = var(X)
+	with_terminal() do
+		println("Variance " , v)
+	end
 end
+
+# ╔═╡ 26839ac2-9e84-42e4-9936-7132711a3b8c
+md"
+(d) Now let us consider a higher variance situation, where σ
+2 = 10.0. Imagine you
+know this variance, and that the data comes from a Gaussian, but that you do not know the true
+mean. Run the code to get 30 samples, and compute one sample average M. What is the 95%
+confidence interval around this M? Give actual numbers.
+
+(e) [8 marks] Now assume you know less: you do not know the data is Gaussian, though you
+still know the variance is σ
+2 = 10.0. Use the same 30 samples from (d) and resulting sample average
+M. Give a 95% confidence interval around M, now without assuming the samples are Gaussian."
 
 # ╔═╡ 34fe4272-f9e8-4a3d-acac-47e7b9c23797
 let # 4d, 4e
-	
+	# using the means from the 30 samples with variance 10
+	X = [-0.6673, -0.1234, 0.2821, -0.2638, -0.15946]
+	μ̂ = mean(X)
+	σ̂ = stddev(X)
+	v = var(X)
+	with_terminal() do
+		println("Variance " , v)
+	end
 end
 
 # ╔═╡ 4ed5ce0f-8aa2-4a82-97a6-cdde9220f19f
@@ -1310,6 +1366,7 @@ version = "0.9.1+5"
 # ╠═6e95d732-b580-450a-85db-447444fea409
 # ╠═8228b64b-96bf-422a-8e01-0e69594343f1
 # ╠═c4769b33-9ecb-4a1d-b927-d3b5b3351bf4
+# ╠═a29b97a4-ad2e-4888-97bc-6d129c7a19ba
 # ╟─859041a0-98b0-427d-8d92-f53f29176805
 # ╠═6c1fd792-91ac-4b3d-96b2-8e108b8caf55
 # ╠═29d1cde5-a0e5-4539-9490-bff81109bd07
@@ -1317,22 +1374,26 @@ version = "0.9.1+5"
 # ╠═d281372b-1473-4e6c-8f9f-cb8f280d8f07
 # ╠═131f1dbd-c128-4d12-8163-250361c13337
 # ╟─07fba25d-ffc3-4eb5-aebf-742e31267aa1
+# ╠═e8437a34-c89b-4da6-ad49-56ea445bacd9
 # ╟─b950704c-4276-4e06-bad0-944aab0b767b
-# ╟─5a89a61f-fb50-4843-97da-a1c526aa6a64
+# ╠═5a89a61f-fb50-4843-97da-a1c526aa6a64
 # ╠═6fcf8a25-07a9-4d5a-8aa4-af4c4d38c96c
 # ╠═10a62eea-efc1-416c-a789-21245a2c3470
 # ╠═eb442864-b44d-4980-bb8f-912bc802d4d2
 # ╟─ff54abab-068a-442f-8572-2da4d90f1fdd
-# ╠═e95ab024-5343-47b8-a1b5-a4f6e2be3549
+# ╟─dfe61219-4c26-4cf1-a9ba-3a6abddfdaa8
+# ╠═9406e2bf-c6c6-4cc2-a79e-376fdb554df5
+# ╟─1513064c-438e-44e3-9e95-6500219eac00
 # ╠═42b5216b-1127-4733-953f-652e4afbc105
+# ╟─26839ac2-9e84-42e4-9936-7132711a3b8c
 # ╠═34fe4272-f9e8-4a3d-acac-47e7b9c23797
 # ╟─4ed5ce0f-8aa2-4a82-97a6-cdde9220f19f
 # ╠═1e613f8c-4639-449e-8c40-f0be93c1ca46
 # ╠═b62fa4e7-7ff6-46a0-8232-b106e8adbc20
 # ╟─8bbbfb8c-6582-4fe8-928d-714eb56a0ad1
-# ╟─6c23eb8c-bf97-462e-a0b0-5a72ff2ce1b7
-# ╟─cc2729ed-6e19-4596-8daf-6a87fb7763df
-# ╟─eb13fb20-d27a-4cb2-b42c-2aba098a6a48
-# ╟─e94d17ab-862e-4c13-9b65-a4df009c59a0
+# ╠═6c23eb8c-bf97-462e-a0b0-5a72ff2ce1b7
+# ╠═cc2729ed-6e19-4596-8daf-6a87fb7763df
+# ╠═eb13fb20-d27a-4cb2-b42c-2aba098a6a48
+# ╠═e94d17ab-862e-4c13-9b65-a4df009c59a0
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
