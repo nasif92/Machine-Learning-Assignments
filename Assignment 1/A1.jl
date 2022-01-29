@@ -177,6 +177,7 @@ let # 4b
 	σ̂ = stddev(X)
 	v = var(X)
 	with_terminal() do
+		println("Sample average ", μ̂)
 		println("Variance " , v)
 	end
 end
@@ -193,6 +194,7 @@ let # 4c
 	σ̂ = stddev(X)
 	v = var(X)
 	with_terminal() do
+		println("Sample average ", μ̂)
 		println("Variance " , v)
 	end
 end
@@ -213,10 +215,8 @@ M. Give a 95% confidence interval around M, now without assuming the samples are
 # ╔═╡ 34fe4272-f9e8-4a3d-acac-47e7b9c23797
 let # 4d, 4e
 	# using the means from the 30 samples with variance 10
-	X = [-0.6673, -0.1234, 0.2821, -0.2638, -0.15946]
-	μ̂ = mean(X)
-	σ̂ = stddev(X)
-	v = var(X)
+	μ̂ = 0.1138
+	v = 10
 	with_terminal() do
 		println("Variance " , v)
 	end
@@ -1388,8 +1388,8 @@ version = "0.9.1+5"
 # ╟─26839ac2-9e84-42e4-9936-7132711a3b8c
 # ╠═34fe4272-f9e8-4a3d-acac-47e7b9c23797
 # ╟─4ed5ce0f-8aa2-4a82-97a6-cdde9220f19f
-# ╠═1e613f8c-4639-449e-8c40-f0be93c1ca46
-# ╠═b62fa4e7-7ff6-46a0-8232-b106e8adbc20
+# ╟─1e613f8c-4639-449e-8c40-f0be93c1ca46
+# ╟─b62fa4e7-7ff6-46a0-8232-b106e8adbc20
 # ╟─8bbbfb8c-6582-4fe8-928d-714eb56a0ad1
 # ╠═6c23eb8c-bf97-462e-a0b0-5a72ff2ce1b7
 # ╠═cc2729ed-6e19-4596-8daf-6a87fb7763df
